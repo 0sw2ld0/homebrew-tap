@@ -11,8 +11,8 @@ require "tmpdir"
 class Alfalfa < Formula
   desc "Arnés de agentes de programación: Ollama, OpenAI, Anthropic y modelos gratis"
   homepage "https://alfalfacode.cuycoders.dev"
-  url "https://github.com/0sw2ld0/AlfalfaCode/releases/download/v0.99.24/AlfalfaCode-0.99.24.dmg"
-  sha256 "3a844c0c1ac430f4fc24cef4eef0df5cf5c86347a576e4f1431d4798df2d9431"
+  url "https://github.com/0sw2ld0/AlfalfaCode/releases/download/v0.99.25/AlfalfaCode-0.99.25.dmg"
+  sha256 "f16e53da496c94c7de9ffbc8ed3ec31909d19f8758fd46a7709bab152987a513"
   license "MIT"
 
   livecheck do
@@ -24,8 +24,8 @@ class Alfalfa < Formula
   # release. :any_skip_relocation: Homebrew no reescribe sus binarios (siguen con la firma
   # Developer ID del equipo FZ8TW9AWLE) y no pide las CLT al día, como sí haría `install`.
   bottle do
-    root_url "https://github.com/0sw2ld0/AlfalfaCode/releases/download/v0.99.24"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma: "fb68739fb81df5d3e8398463e2a6a3257d4300dfd281699f82be170da6fe4a65"
+    root_url "https://github.com/0sw2ld0/AlfalfaCode/releases/download/v0.99.25"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma: "1491a25f6b4d68d70097289d9a7cc30ef4a232ae8da2859a8d9538c1ee924268"
   end
 
   depends_on arch: :arm64

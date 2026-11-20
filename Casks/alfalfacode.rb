@@ -2,8 +2,8 @@
 # (distribucion/homebrew) y se copia al tap 0sw2ld0/homebrew-tap; la versión y la huella
 # las cambia distribucion/actualizar-tap.sh a partir de cada release.
 cask "alfalfacode" do
-  version "0.99.27"
-  sha256 "711263e2d6e56c040ac5a5ee73d144d565d01f503a1cf9851ec2a66162fac9bb"
+  version "0.99.28"
+  sha256 "bf6a552612891390df857e09618a52dd12a89db010fd6f3fc011d9fa317ed179"
 
   url "https://github.com/0sw2ld0/AlfalfaCode/releases/download/v#{version}/AlfalfaCode-#{version}.dmg",
       verified: "github.com/0sw2ld0/AlfalfaCode/"

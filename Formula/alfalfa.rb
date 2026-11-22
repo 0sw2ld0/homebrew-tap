@@ -11,8 +11,8 @@ require "tmpdir"
 class Alfalfa < Formula
   desc "Arnés de agentes de programación: Ollama, OpenAI, Anthropic y modelos gratis"
   homepage "https://alfalfacode.cuycoders.dev"
-  url "https://github.com/0sw2ld0/AlfalfaCode/releases/download/v0.99.34/AlfalfaCode-0.99.34.dmg"
-  sha256 "2a14882f3c81065f6cc5dbbaad388e6b5af675e6b9fed1bce2cf65d176e6a8a8"
+  url "https://github.com/0sw2ld0/AlfalfaCode/releases/download/v0.99.35/AlfalfaCode-0.99.35.dmg"
+  sha256 "b2b16386ae61c62e0654c8e65e99b2eb24fd6276fb6da6ebbdded4e8e152a328"
   license "MIT"
 
   livecheck do
@@ -24,8 +24,8 @@ class Alfalfa < Formula
   # release. :any_skip_relocation: Homebrew no reescribe sus binarios (siguen con la firma
   # Developer ID del equipo FZ8TW9AWLE) y no pide las CLT al día, como sí haría `install`.
   bottle do
-    root_url "https://github.com/0sw2ld0/AlfalfaCode/releases/download/v0.99.34"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma: "f851c00f2a39d54b62307ada1ca17002e4bafa39d61fd04137c2f5fcc1e3e9e9"
+    root_url "https://github.com/0sw2ld0/AlfalfaCode/releases/download/v0.99.35"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma: "34492535743c69cb085f13ff94b4c545311e2a0a060d55f6c754d07724250694"
   end
 
   depends_on arch: :arm64
@@ -40,6 +40,7 @@ class Alfalfa < Formula
     # Homebrew entra en la única carpeta del DMG (la app) si el acceso a Aplicaciones no cuenta.
     contenidos = [buildpath/"Contents", buildpath/"AlfalfaCode.app/Contents"].find(&:directory?)
     odie "El DMG no trae AlfalfaCode.app" if contenidos.nil?
+    comprobar_ayudante(contenidos, "AlfalfaBrowserVersion", "alfalfabrowser", "AlfalfaBrowser")
     comprobar_ayudante(contenidos, "AlfalfaCuyBrowserVersion", "cuybrowser", "CuyBrowser")
     comprobar_ayudante(contenidos, "AlfalfaDesktopVersion", "alfalfa-desktop", "AlfalfaDesktop", "AlfalfaDesktop ")
 
@@ -52,9 +53,9 @@ class Alfalfa < Formula
     # con @rpath) y las vuelve a firmar ad hoc. El Python lleva hardened runtime con la firma
     # del equipo, que no cargaría una biblioteca firmada ad hoc: todo el motor va ad hoc, sin
     # runtime. La huella SHA-256 del DMG comprueba la integridad. Los ayudantes autónomos
-    # conservan sus firmas originales, incluidas las excepciones de JavaScriptCore de CuyBrowser.
+    # conservan sus firmas originales, incluidas las excepciones de JavaScriptCore de AlfalfaBrowser.
     magicos = [0xcafebabe, 0xfeedface, 0xfeedfacf, 0xcefaedfe, 0xcffaedfe]
-    firmados = %w[cuybrowser alfalfa-desktop].map { |nombre| (libexec/"Helpers"/nombre).to_s }
+    firmados = %w[alfalfabrowser cuybrowser alfalfa-desktop].map { |nombre| (libexec/"Helpers"/nombre).to_s }
     macho = Dir[libexec/"**/*"].select do |f|
       !firmados.include?(f) && File.file?(f) && !File.symlink?(f) && File.size(f) >= 4 &&
         magicos.include?(File.binread(f, 4).unpack1("N"))
@@ -109,7 +110,7 @@ class Alfalfa < Formula
     assert_match version.to_s, shell_output("#{bin}/alfalfa --version")
     assert_match "brew", shell_output("#{libexec}/Resources/motor/python/bin/python3 -I -B -c " \
                                       "'import alfalfa.empaquetado as e; print(e.instalacion())'")
-    %w[cuybrowser alfalfa-desktop].each do |nombre|
+    %w[alfalfabrowser cuybrowser alfalfa-desktop].each do |nombre|
       ayudante = libexec/"Helpers"/nombre
       system "/usr/bin/codesign", "--verify", "--strict", ayudante.to_s if ayudante.exist?
     end
